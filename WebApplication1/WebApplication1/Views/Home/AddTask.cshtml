@@ -1,0 +1,46 @@
+﻿@model WebApplication1.Models.viewModel
+
+@{
+    ViewBag.Title = "AddTask";
+    Layout = "~/Views/Shared/mainLayout.cshtml";
+}
+
+<div style="display: flex; justify-content: center; align-items: center; position:relative; margin-top: 2%; margin-bottom:2%;">
+    <div id="layoutAuthentication" style="padding:20px; width: 80%; max-width: 600px; height: 500px; max-height: 500px;  border: 3px solid black; border-radius: 5px;">
+        <div id="layoutAuthentication_content" style="margin-top: 5%;">
+            <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+            <main>
+                <form method="post" action="@Url.Action("saveTask", "Home")" style="width: 100%;">
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="inputOrderName" name="OrderName" type="text" placeholder="Order Name" />
+                        <label for="inputOrderName">Order Name</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="inputDescription" name="Description" placeholder="Description"></textarea>
+                        <label for="inputDescription">Description</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="inputCreatedBy" name="CreatedBy" type="text" placeholder="Created By"
+                               value="@ViewBag.Manager" readonly />
+                        <label for="inputCreatedBy">Created By</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        @Html.DropDownList("AssignedTo", ViewBag.Employees as SelectList, null, new { @class = "form-control" })
+                        <label for="AssignedTo">Assigned To</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="inputDateCreated" name="DateCreated" type="date" placeholder="Date Created" />
+                        <label for="inputDateCreated">Date Created</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="inputDueDate" name="DueDate" type="date" placeholder="Due Date" />
+                        <label for="inputDueDate">Due Date</label>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mt-4 mb-0" style="width: 100%;">
+                        <button class="btn btn-primary" type="submit">Submit Order</button>
+                    </div>
+                </form>
+            </main>
+        </div>
+    </div>
+</div>

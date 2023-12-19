@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "ManagerDashboard";
+    Layout = "~/Views/Shared/mainLayout.cshtml";
+    @model WebApplication1.Models.viewModel
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Dashboard</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item active">Dashboard</li>
+    </ol>
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">Add Work Order</div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="@Url.Action("addTask","Home")">Open Task Form</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            Tasks
+        </div>
+        <div class="card-body">
+            <table id="datatablesSimple" class="table">
+                <thead>
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Assigned To</th>
+                        <th>Created On</th>
+                        <th>Due By</th>
+                        <th>Task Status</th>
+                        <th>Actions</th> <!-- New header for actions -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamic Rows -->
+                    @foreach (var order in Model.Orders)
+                    {
+                        <tr>
+                            <td>@order.order_name</td>
+                            <td>@order.description</td>
+                            <td>@order.Manager.FullName</td>
+                            <td>@order.date_created.ToShortDateString()</td>
+                            <td>@order.due_date.ToShortDateString()</td>
+                            <td>@(order.status == 0 ? "In Progress" : "Completed")</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Edit Actions" style="width: 100%;">
+                                    @if (order.status == 0)
+                                    {
+                                        <a href="@Url.Action("FinishTask", "Home", new { orderId = order.order_id })" class="btn btn-success">Finish Task</a>
+                                    }
+                                    <a href="@Url.Action("DeleteTask", "Home", new { orderId = order.order_id })" class="btn btn-danger">Delete Task</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Task Name</th>
+                        <th>Description</th>
+                        <th>Assigned To</th>
+                        <th>Created On</th>
+                        <th>Due By</th>
+                        <th>Task Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
